@@ -90,7 +90,7 @@ my @diffs = ();
 print "Data Center ID, Field, Period1, Value1, Period2, Value2, Change\n";
 
 # Loop through each Data Center ID, fetch that specific row wherever it is in the sheet:
-foreach my $dc_id (keys %dc_map) {
+foreach my $dc_id (sort keys %dc_map) {
     my $f1_row = $dc_map{$dc_id}{$file1};
     my $f2_row = $dc_map{$dc_id}{$file2};
     my @r1 = Spreadsheet::Read::row( $s1, $f1_row );
@@ -98,8 +98,8 @@ foreach my $dc_id (keys %dc_map) {
 
     # Loop through the column names & compare the specific cells for each:
     foreach my $cname (keys %column_map) {
-        my $f1_col = $column_map{$cname}{$file1};
-        my $f2_col = $column_map{$cname}{$file2};
+        my $f1_col = $column_map{$cname}{$file1} - 1;
+        my $f2_col = $column_map{$cname}{$file2} - 1;
          
         # Get the actual cells in question:
         my $c1 = $r1[$f1_col];
